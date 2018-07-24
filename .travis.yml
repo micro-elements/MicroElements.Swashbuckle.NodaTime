@@ -1,0 +1,9 @@
+language: csharp
+mono: none
+dotnet: 2.1.300
+os:
+  - linux
+before_script:
+  - chmod a+x ./build.sh
+script:
+  - ./build.sh --target=Travis --verbosity=normal
