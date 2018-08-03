@@ -4,7 +4,7 @@
     <Product></Product>
     <Copyright></Copyright>
     <Authors>micro-elements</Authors>
-    <PackageIconUrl></PackageIconUrl>
+    <PackageIconUrl>https://raw.githubusercontent.com/micro-elements/MicroElements/master/image/logo_rounded.png</PackageIconUrl>
     <PackageProjectUrl>https://github.com/micro-elements/MicroElements.Swashbuckle.NodaTime</PackageProjectUrl>
     <PackageLicenseUrl>https://raw.githubusercontent.com/micro-elements/MicroElements.Swashbuckle.NodaTime/master/LICENSE</PackageLicenseUrl>
     <RepositoryType>git</RepositoryType>

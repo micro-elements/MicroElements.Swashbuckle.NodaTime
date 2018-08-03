@@ -5,11 +5,15 @@ VisualStudioVersion = 15.0.26124.0
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{6B66F586-EF92-418F-AC6E-4BF4C52411D3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicroElements.Swashbuckle.NodaTime", "src\MicroElements.Swashbuckle.NodaTime\MicroElements.Swashbuckle.NodaTime.csproj", "{AAC5EC68-5313-48AC-B25B-3B3B4611AE4F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicroElements.Swashbuckle.NodaTime", "src\MicroElements.Swashbuckle.NodaTime\MicroElements.Swashbuckle.NodaTime.csproj", "{AAC5EC68-5313-48AC-B25B-3B3B4611AE4F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{09A81706-5AAC-4D3B-81FB-BD4DD28D03CB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicroElements.Swashbuckle.NodaTime.Tests", "test\MicroElements.Swashbuckle.NodaTime.Tests\MicroElements.Swashbuckle.NodaTime.Tests.csproj", "{798200FF-E54C-428F-A814-6CF9779DCE39}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicroElements.Swashbuckle.NodaTime.Tests", "test\MicroElements.Swashbuckle.NodaTime.Tests\MicroElements.Swashbuckle.NodaTime.Tests.csproj", "{798200FF-E54C-428F-A814-6CF9779DCE39}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{3FEFEC89-F7E7-46E7-BBA6-7EF5D609B7A2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApiSample", "samples\WebApiSample\WebApiSample.csproj", "{6E7D915A-9EE2-4ADA-B8C9-D0B934F4B425}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,9 +23,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 		Release|x64 = Release|x64
 		Release|x86 = Release|x86
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{AAC5EC68-5313-48AC-B25B-3B3B4611AE4F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -48,9 +49,28 @@ Global
 		{798200FF-E54C-428F-A814-6CF9779DCE39}.Release|x64.Build.0 = Release|Any CPU
 		{798200FF-E54C-428F-A814-6CF9779DCE39}.Release|x86.ActiveCfg = Release|Any CPU
 		{798200FF-E54C-428F-A814-6CF9779DCE39}.Release|x86.Build.0 = Release|Any CPU
+		{6E7D915A-9EE2-4ADA-B8C9-D0B934F4B425}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E7D915A-9EE2-4ADA-B8C9-D0B934F4B425}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E7D915A-9EE2-4ADA-B8C9-D0B934F4B425}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{6E7D915A-9EE2-4ADA-B8C9-D0B934F4B425}.Debug|x64.Build.0 = Debug|Any CPU
+		{6E7D915A-9EE2-4ADA-B8C9-D0B934F4B425}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{6E7D915A-9EE2-4ADA-B8C9-D0B934F4B425}.Debug|x86.Build.0 = Debug|Any CPU
+		{6E7D915A-9EE2-4ADA-B8C9-D0B934F4B425}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E7D915A-9EE2-4ADA-B8C9-D0B934F4B425}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6E7D915A-9EE2-4ADA-B8C9-D0B934F4B425}.Release|x64.ActiveCfg = Release|Any CPU
+		{6E7D915A-9EE2-4ADA-B8C9-D0B934F4B425}.Release|x64.Build.0 = Release|Any CPU
+		{6E7D915A-9EE2-4ADA-B8C9-D0B934F4B425}.Release|x86.ActiveCfg = Release|Any CPU
+		{6E7D915A-9EE2-4ADA-B8C9-D0B934F4B425}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{AAC5EC68-5313-48AC-B25B-3B3B4611AE4F} = {6B66F586-EF92-418F-AC6E-4BF4C52411D3}
 		{798200FF-E54C-428F-A814-6CF9779DCE39} = {09A81706-5AAC-4D3B-81FB-BD4DD28D03CB}
+		{6E7D915A-9EE2-4ADA-B8C9-D0B934F4B425} = {3FEFEC89-F7E7-46E7-BBA6-7EF5D609B7A2}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0C0A56C4-3421-4F73-9F82-BD34B0C7D233}
 	EndGlobalSection
 EndGlobal

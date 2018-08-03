@@ -1,0 +1,27 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Cake: Debug Script (CoreCLR)",
+            "type": "coreclr",
+            "request": "launch",
+            "program": "${workspaceRoot}/tools/Cake.CoreCLR/0.29.0/Cake.dll",
+            "args": [
+                //"${workspaceRoot}/build.cake",
+                //uncomment and edit for component script debug
+                "${workspaceRoot}/tools/microelements.devops/1.4.1/scripts/main.cake",
+                "--devOpsRoot=${workspaceRoot}/tools/microelements.devops/1.4.1",
+                "--debug",
+                "--verbosity=diagnostic",
+                "--rootDir=${workspaceRoot}",
+                "--Target=Default",
+                "--TestSourceLink=false",
+                "--Header=\"-+++++++-,MicroElements,DevOps,-+++++++-\""
+            ],
+            "cwd": "${workspaceRoot}",
+            "stopAtEntry": true,
+            "externalConsole": false
+        }
+    ],
+    "compounds": []
+}
