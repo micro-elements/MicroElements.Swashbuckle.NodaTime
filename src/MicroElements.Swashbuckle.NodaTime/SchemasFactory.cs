@@ -42,6 +42,7 @@ namespace MicroElements.Swashbuckle.NodaTime
                     .PlusTicks(TimeSpan.TicksPerMinute)
                     .PlusTicks(TimeSpan.TicksPerSecond)
                     .PlusTicks(TimeSpan.TicksPerMillisecond));
+            var dateInterval = new DateInterval(zonedDateTime.Date, zonedDateTime.Date.PlusDays(1));
             Period period = Period.Between(zonedDateTime.LocalDateTime, interval.End.InZone(dateTimeZone).LocalDateTime, PeriodUnits.AllUnits);
 
             // https://xml2rfc.tools.ietf.org/public/rfc/html/rfc3339.html#anchor14
@@ -58,8 +59,17 @@ namespace MicroElements.Swashbuckle.NodaTime
                     Type = "object",
                     Properties = new Dictionary<string, Schema>
                     {
-                        { GetPropName(typeof(Interval), nameof(Interval.Start)), StringSchema(interval.Start, "date-time") },
-                        { GetPropName(typeof(Interval), nameof(Interval.End)), StringSchema(interval.End, "date-time") },
+                        { ResolvePropertyName(_serializerSettings, nameof(Interval.Start)), StringSchema(interval.Start, "date-time") },
+                        { ResolvePropertyName(_serializerSettings, nameof(Interval.End)), StringSchema(interval.End, "date-time") },
+                    },
+                },
+                DateInterval = new Schema
+                {
+                    Type = "object",
+                    Properties = new Dictionary<string, Schema>
+                    {
+                        { ResolvePropertyName(_serializerSettings, nameof(DateInterval.Start)), StringSchema(dateInterval.Start, "full-date") },
+                        { ResolvePropertyName(_serializerSettings, nameof(DateInterval.End)), StringSchema(dateInterval.End, "full-date") },
                     },
                 },
                 Offset = StringSchema(zonedDateTime.Offset, "time-numoffset"),
@@ -76,11 +86,16 @@ namespace MicroElements.Swashbuckle.NodaTime
             Format = format
         };
 
-        private string GetPropName(Type type, string propName)
+        /// <summary>
+        /// Resolves property name according <see cref="DefaultContractResolver.NamingStrategy"/>.
+        /// <para>If serializer is not DefaultContractResolver then original propertyName returns.</para>
+        /// </summary>
+        /// <param name="serializer">The serializer to use name resolve.</param>
+        /// <param name="propertyName">Property name.</param>
+        /// <returns>Resolved propertyName.</returns>
+        internal static string ResolvePropertyName(JsonSerializerSettings serializer, string propertyName)
         {
-            IContractResolver contractResolver = _serializerSettings.ContractResolver ?? new DefaultContractResolver();
-            JsonObjectContract jsonObjectContract = contractResolver.ResolveContract(type) as JsonObjectContract;
-            return jsonObjectContract?.Properties?.FirstOrDefault(property => property.UnderlyingName == propName)?.PropertyName ?? propName;
+            return (serializer.ContractResolver as DefaultContractResolver)?.GetResolvedPropertyName(propertyName) ?? propertyName;
         }
     }
 }

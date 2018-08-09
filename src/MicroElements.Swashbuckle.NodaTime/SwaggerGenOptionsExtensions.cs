@@ -53,6 +53,7 @@ namespace MicroElements.Swashbuckle.NodaTime
             config.MapType<OffsetDateTime> (() => schemas.OffsetDateTime);
             config.MapType<ZonedDateTime>  (() => schemas.ZonedDateTime);
             config.MapType<Interval>       (() => schemas.Interval);
+            config.MapType<DateInterval>   (() => schemas.DateInterval);
             config.MapType<Offset>         (() => schemas.Offset);
             config.MapType<Period>         (() => schemas.Period);
             config.MapType<Duration>       (() => schemas.Duration);

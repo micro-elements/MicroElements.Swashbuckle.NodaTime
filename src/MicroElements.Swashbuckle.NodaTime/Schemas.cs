@@ -21,6 +21,8 @@ namespace MicroElements.Swashbuckle.NodaTime
 
         public Schema Interval { get; set; }
 
+        public Schema DateInterval { get; set; }
+
         public Schema Offset { get; set; }
 
         public Schema Period { get; set; }
