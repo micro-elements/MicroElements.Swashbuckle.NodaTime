@@ -27,10 +27,10 @@ dotnet add package microelements.swashbuckle.nodatime
 - Configure JsonSerializer to properly serialize NodaTime types. see `AddJsonFormatters` or `AddJsonOptions`
 - Configure `AddSwaggerGen` with `ConfigureForNodaTime`
 
-## Why MicroElements.Swashbuckle.NodaTime is better than others
+## Benefits of MicroElements.Swashbuckle.NodaTime
 - Implemented in c#, no FSharp.Core lib in dependencies
 - JsonSerializerSettings ContractResolver uses for NamingStrategy, so you can use DefaultNamingStrategy, CamelCaseNamingStrategy or SnakeCaseNamingStrategy
-- Added new DateInterval (waiting for new release of NodaTime.Serialization.JsonNet)
+- Added new DateInterval (use NodaTime.Serialization.JsonNet >= 2.1.0)
 
 ## Sample
 ```csharp
@@ -93,6 +93,17 @@ public class Startup
 1. MicroElements.Swashbuckle.NodaTime creates Schemas for all NodaTime types
 2. MicroElements.Swashbuckle.NodaTime configures JsonSerializer for examples
 3. Maps types to [ISO 8601]
+
+## Screenshots
+
+## Without MicroElements.Swashbuckle.NodaTime
+![WithoutMicroElements](images/NodaTime0.png "WithoutMicroElements")
+
+## With MicroElements.Swashbuckle.NodaTime
+![WithMicroElements](images/NodaTime1.png "WithMicroElements")
+
+## With MicroElements.Swashbuckle.NodaTime (camelCase)
+![WithMicroElements](images/NodaTime1.png "WithMicroElements")
 
 ## Build
 Windows: Run `build.ps1`

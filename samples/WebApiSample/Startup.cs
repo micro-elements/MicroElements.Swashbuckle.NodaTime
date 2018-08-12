@@ -18,10 +18,11 @@ namespace WebApiSample
             void InitJsonSettings(JsonSerializerSettings serializerSettings)
             {
                 // Use DefaultContractResolver or CamelCasePropertyNamesContractResolver;
-                serializerSettings.ContractResolver = new DefaultContractResolver();
-                //{
-                //    NamingStrategy = new SnakeCaseNamingStrategy()
-                //};
+                serializerSettings.ContractResolver = new DefaultContractResolver()
+                {
+                    //NamingStrategy = new SnakeCaseNamingStrategy()
+                    //NamingStrategy = new CamelCaseNamingStrategy()
+                };
 
                 // Configures JsonSerializer to properly serialize NodaTime types.
                 serializerSettings.ConfigureForNodaTime(DateTimeZoneProviders.Tzdb);
