@@ -103,7 +103,7 @@ public class Startup
 ![WithMicroElements](images/NodaTime1.png "WithMicroElements")
 
 ## With MicroElements.Swashbuckle.NodaTime (camelCase)
-![WithMicroElements](images/NodaTime1.png "WithMicroElements")
+![WithMicroElements](images/NodaTime2.png "WithMicroElements")
 
 ## Build
 Windows: Run `build.ps1`
