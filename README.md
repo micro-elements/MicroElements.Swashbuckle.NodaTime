@@ -97,13 +97,13 @@ public class Startup
 ## Screenshots
 
 ## Without MicroElements.Swashbuckle.NodaTime
-![WithoutMicroElements](images/NodaTime0.png "WithoutMicroElements")
+![](https://raw.githubusercontent.com/micro-elements/MicroElements.Swashbuckle.NodaTime/master/images/NodaTime0.png)
 
 ## With MicroElements.Swashbuckle.NodaTime
-![WithMicroElements](images/NodaTime1.png "WithMicroElements")
+![](https://raw.githubusercontent.com/micro-elements/MicroElements.Swashbuckle.NodaTime/master/images/NodaTime1.png)
 
 ## With MicroElements.Swashbuckle.NodaTime (camelCase)
-![WithMicroElements](images/NodaTime2.png "WithMicroElements")
+![](https://raw.githubusercontent.com/micro-elements/MicroElements.Swashbuckle.NodaTime/master/images/NodaTime2.png)
 
 ## Build
 Windows: Run `build.ps1`

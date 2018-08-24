@@ -7,6 +7,7 @@
     <DebugType>embedded</DebugType>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Deterministic>true</Deterministic>
   </PropertyGroup>
   <Import Project="stylecop.props"/>
 </Project>
