@@ -1,3 +1,6 @@
+# 1.0.2
+- Bugfix: Uses factory instead of shared Schema instance. See: PR#3
+
 # 1.0.1
 - Updated package description
 
