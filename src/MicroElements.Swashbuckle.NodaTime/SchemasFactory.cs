@@ -48,13 +48,13 @@ namespace MicroElements.Swashbuckle.NodaTime
             // https://xml2rfc.tools.ietf.org/public/rfc/html/rfc3339.html#anchor14
             return new Schemas
             {
-                Instant = StringSchema(instant, "date-time"),
-                LocalDate = StringSchema(zonedDateTime.Date, "full-date"),
-                LocalTime = StringSchema(zonedDateTime.TimeOfDay, "partial-time"),
-                LocalDateTime = StringSchema(zonedDateTime.LocalDateTime),
-                OffsetDateTime = StringSchema(instant.WithOffset(zonedDateTime.Offset), "date-time"),
-                ZonedDateTime = StringSchema(zonedDateTime),
-                Interval = new Schema
+                Instant = () => StringSchema(instant, "date-time"),
+                LocalDate = () => StringSchema(zonedDateTime.Date, "full-date"),
+                LocalTime = () => StringSchema(zonedDateTime.TimeOfDay, "partial-time"),
+                LocalDateTime = () => StringSchema(zonedDateTime.LocalDateTime),
+                OffsetDateTime = () => StringSchema(instant.WithOffset(zonedDateTime.Offset), "date-time"),
+                ZonedDateTime = () => StringSchema(zonedDateTime),
+                Interval = () => new Schema
                 {
                     Type = "object",
                     Properties = new Dictionary<string, Schema>
@@ -63,7 +63,7 @@ namespace MicroElements.Swashbuckle.NodaTime
                         { ResolvePropertyName(_serializerSettings, nameof(Interval.End)), StringSchema(interval.End, "date-time") },
                     },
                 },
-                DateInterval = new Schema
+                DateInterval = () => new Schema
                 {
                     Type = "object",
                     Properties = new Dictionary<string, Schema>
@@ -72,10 +72,10 @@ namespace MicroElements.Swashbuckle.NodaTime
                         { ResolvePropertyName(_serializerSettings, nameof(DateInterval.End)), StringSchema(dateInterval.End, "full-date") },
                     },
                 },
-                Offset = StringSchema(zonedDateTime.Offset, "time-numoffset"),
-                Period = StringSchema(period),
-                Duration = StringSchema(interval.Duration),
-                DateTimeZone = StringSchema(dateTimeZone),
+                Offset = () => StringSchema(zonedDateTime.Offset, "time-numoffset"),
+                Period = () => StringSchema(period),
+                Duration = () => StringSchema(interval.Duration),
+                DateTimeZone = () => StringSchema(dateTimeZone),
             };
         }
 

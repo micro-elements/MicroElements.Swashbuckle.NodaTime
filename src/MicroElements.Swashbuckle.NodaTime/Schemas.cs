@@ -1,4 +1,5 @@
-﻿using Swashbuckle.AspNetCore.Swagger;
+﻿using System;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace MicroElements.Swashbuckle.NodaTime
 {
@@ -7,28 +8,28 @@ namespace MicroElements.Swashbuckle.NodaTime
     /// </summary>
     public class Schemas
     {
-        public Schema Instant { get; set; }
+        public Func<Schema> Instant { get; set; }
 
-        public Schema LocalDate{ get; set; }
+        public Func<Schema> LocalDate { get; set; }
 
-        public Schema LocalTime { get; set; }
+        public Func<Schema> LocalTime { get; set; }
 
-        public Schema LocalDateTime { get; set; }
+        public Func<Schema> LocalDateTime { get; set; }
 
-        public Schema OffsetDateTime { get; set; }
+        public Func<Schema> OffsetDateTime { get; set; }
 
-        public Schema ZonedDateTime { get; set; }
+        public Func<Schema> ZonedDateTime { get; set; }
 
-        public Schema Interval { get; set; }
+        public Func<Schema> Interval { get; set; }
 
-        public Schema DateInterval { get; set; }
+        public Func<Schema> DateInterval { get; set; }
 
-        public Schema Offset { get; set; }
+        public Func<Schema> Offset { get; set; }
 
-        public Schema Period { get; set; }
+        public Func<Schema> Period { get; set; }
 
-        public Schema Duration { get; set; }
+        public Func<Schema> Duration { get; set; }
 
-        public Schema DateTimeZone { get; set; }
+        public Func<Schema> DateTimeZone { get; set; }
     }
 }

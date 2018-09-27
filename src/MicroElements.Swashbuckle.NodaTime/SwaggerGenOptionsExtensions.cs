@@ -46,28 +46,28 @@ namespace MicroElements.Swashbuckle.NodaTime
                 serializerSettings.ConfigureForNodaTime(DateTimeZoneProviders.Tzdb);
 
             Schemas schemas = new SchemasFactory(serializerSettings).CreateSchemas();
-            config.MapType<Instant>        (() => schemas.Instant);
-            config.MapType<LocalDate>      (() => schemas.LocalDate);
-            config.MapType<LocalTime>      (() => schemas.LocalTime);
-            config.MapType<LocalDateTime>  (() => schemas.LocalDateTime);
-            config.MapType<OffsetDateTime> (() => schemas.OffsetDateTime);
-            config.MapType<ZonedDateTime>  (() => schemas.ZonedDateTime);
-            config.MapType<Interval>       (() => schemas.Interval);
-            config.MapType<DateInterval>   (() => schemas.DateInterval);
-            config.MapType<Offset>         (() => schemas.Offset);
-            config.MapType<Period>         (() => schemas.Period);
-            config.MapType<Duration>       (() => schemas.Duration);
-            config.MapType<DateTimeZone>   (() => schemas.DateTimeZone);
+            config.MapType<Instant>        (schemas.Instant);
+            config.MapType<LocalDate>      (schemas.LocalDate);
+            config.MapType<LocalTime>      (schemas.LocalTime);
+            config.MapType<LocalDateTime>  (schemas.LocalDateTime);
+            config.MapType<OffsetDateTime> (schemas.OffsetDateTime);
+            config.MapType<ZonedDateTime>  (schemas.ZonedDateTime);
+            config.MapType<Interval>       (schemas.Interval);
+            config.MapType<DateInterval>   (schemas.DateInterval);
+            config.MapType<Offset>         (schemas.Offset);
+            config.MapType<Period>         (schemas.Period);
+            config.MapType<Duration>       (schemas.Duration);
+            config.MapType<DateTimeZone>   (schemas.DateTimeZone);
 
-            config.MapType<Instant?>       (() => schemas.Instant);
-            config.MapType<LocalDate?>     (() => schemas.LocalDate);
-            config.MapType<LocalTime?>     (() => schemas.LocalTime);
-            config.MapType<LocalDateTime?> (() => schemas.LocalDateTime);
-            config.MapType<OffsetDateTime?>(() => schemas.OffsetDateTime);
-            config.MapType<ZonedDateTime?> (() => schemas.ZonedDateTime);
-            config.MapType<Interval?>      (() => schemas.Interval);
-            config.MapType<Offset?>        (() => schemas.Offset);
-            config.MapType<Duration?>      (() => schemas.Duration);
+            config.MapType<Instant?>       (schemas.Instant);
+            config.MapType<LocalDate?>     (schemas.LocalDate);
+            config.MapType<LocalTime?>     (schemas.LocalTime);
+            config.MapType<LocalDateTime?> (schemas.LocalDateTime);
+            config.MapType<OffsetDateTime?>(schemas.OffsetDateTime);
+            config.MapType<ZonedDateTime?> (schemas.ZonedDateTime);
+            config.MapType<Interval?>      (schemas.Interval);
+            config.MapType<Offset?>        (schemas.Offset);
+            config.MapType<Duration?>      (schemas.Duration);
         }
     }
 }
