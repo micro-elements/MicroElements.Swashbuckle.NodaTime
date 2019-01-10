@@ -6,8 +6,8 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
-    <PackageReference Include="NodaTime" Version="2.3.0" />
-    <PackageReference Include="NodaTime.Serialization.JsonNet" Version="2.1.0-beta01" />
+    <PackageReference Include="NodaTime" Version="2.4.0" />
+    <PackageReference Include="NodaTime.Serialization.JsonNet" Version="2.1.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="3.0.0" />
   </ItemGroup>
 
