@@ -1,3 +1,6 @@
+# 1.2.0
+- Swashbuckle.AspNetCore fixed to versions [2.4.0, 4.0.1)
+
 # 1.1.0
 - Dependencies updated
 
