@@ -3,11 +3,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using Microsoft.OpenApi.Any;
+using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using NodaTime;
-using Swashbuckle.AspNetCore.Swagger;
 
 namespace MicroElements.Swashbuckle.NodaTime
 {
@@ -54,19 +54,19 @@ namespace MicroElements.Swashbuckle.NodaTime
                 LocalDateTime = () => StringSchema(zonedDateTime.LocalDateTime),
                 OffsetDateTime = () => StringSchema(instant.WithOffset(zonedDateTime.Offset), "date-time"),
                 ZonedDateTime = () => StringSchema(zonedDateTime),
-                Interval = () => new Schema
+                Interval = () => new OpenApiSchema
                 {
                     Type = "object",
-                    Properties = new Dictionary<string, Schema>
+                    Properties = new Dictionary<string, OpenApiSchema>
                     {
                         { ResolvePropertyName(_serializerSettings, nameof(Interval.Start)), StringSchema(interval.Start, "date-time") },
                         { ResolvePropertyName(_serializerSettings, nameof(Interval.End)), StringSchema(interval.End, "date-time") },
                     },
                 },
-                DateInterval = () => new Schema
+                DateInterval = () => new OpenApiSchema
                 {
                     Type = "object",
-                    Properties = new Dictionary<string, Schema>
+                    Properties = new Dictionary<string, OpenApiSchema>
                     {
                         { ResolvePropertyName(_serializerSettings, nameof(DateInterval.Start)), StringSchema(dateInterval.Start, "full-date") },
                         { ResolvePropertyName(_serializerSettings, nameof(DateInterval.End)), StringSchema(dateInterval.End, "full-date") },
@@ -79,11 +79,11 @@ namespace MicroElements.Swashbuckle.NodaTime
             };
         }
 
-        private Schema StringSchema(object exampleObject, string format = null) => new Schema
+        private OpenApiSchema StringSchema(object exampleObject, string format = null) => new OpenApiSchema
         {
             Type = "string",
-            Example = JsonConvert.DeserializeObject<string>(JsonConvert.SerializeObject(exampleObject, _serializerSettings)),
-            Format = format
+            Example = new OpenApiString(JsonConvert.DeserializeObject<string>(JsonConvert.SerializeObject(exampleObject, _serializerSettings))),
+            Format = format,
         };
 
         /// <summary>

@@ -1,3 +1,6 @@
+# 3.0.0-rc.1
+- Swashbuckle.AspNetCore updated to version 5.0.0-rc4
+
 # 2.0.0
 - Swashbuckle.AspNetCore fixed to versions [4.0.1, 5.0.0)
 
