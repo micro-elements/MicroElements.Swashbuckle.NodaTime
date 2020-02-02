@@ -23,7 +23,7 @@ namespace MicroElements.Swashbuckle.NodaTime.Tests
         [Fact]
         public void Sum()
         {
-            Schemas schemas = new SchemasFactory(NodaTimeSchemaSettings.CreateForNewtonsoftJson(_serializerSettings)).CreateSchemas();
+            Schemas schemas = new SchemasFactory(_serializerSettings.CreateNodaTimeSchemaSettingsForNewtonsoftJson()).CreateSchemas();
         }
 
     }
