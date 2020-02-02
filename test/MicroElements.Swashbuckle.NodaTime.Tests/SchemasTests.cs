@@ -2,7 +2,6 @@ using System;
 using Newtonsoft.Json;
 using NodaTime;
 using NodaTime.Serialization.JsonNet;
-using Swashbuckle.Swagger;
 using Xunit;
 
 namespace MicroElements.Swashbuckle.NodaTime.Tests
@@ -24,7 +23,7 @@ namespace MicroElements.Swashbuckle.NodaTime.Tests
         [Fact]
         public void Sum()
         {
-            Schemas schemas = new SchemasFactory(_serializerSettings).CreateSchemas();
+            Schemas schemas = new SchemasFactory(NodaTimeSchemaSettings.CreateForNewtonsoftJson(_serializerSettings)).CreateSchemas();
         }
 
     }

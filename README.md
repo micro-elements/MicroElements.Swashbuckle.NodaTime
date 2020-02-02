@@ -31,54 +31,107 @@ dotnet add package microelements.swashbuckle.nodatime
 - Implemented in c#, no FSharp.Core lib in dependencies
 - JsonSerializerSettings ContractResolver uses for NamingStrategy, so you can use DefaultNamingStrategy, CamelCaseNamingStrategy or SnakeCaseNamingStrategy
 - Added new DateInterval (use NodaTime.Serialization.JsonNet >= 2.1.0)
+- Supports net core 3 and brand new System.Text.Json
 
 ## Sample
+
+Full sample see in samples: https://github.com/micro-elements/MicroElements.Swashbuckle.NodaTime/tree/master/samples/WebApiSample
+
 ```csharp
 public class Startup
 {
+    enum JsonProvider
+    {
+        NewtonsoftJson,
+        SystemTextJson
+    }
+
+    // JsonProvider
+    private static JsonProvider useJsonProvider = JsonProvider.SystemTextJson;
+
+    // USING NewtonsoftJson settings as PropertyNamingPolicy for System.Text.Json
+    private static bool useNewtonsoftJsonAsNamingPolicy = true;
+
+    // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services)
     {
-        void InitJsonSettings(JsonSerializerSettings serializerSettings)
+        void ConfigureNewtonsoftJsonSerializerSettings(JsonSerializerSettings serializerSettings)
         {
             // Use DefaultContractResolver or CamelCasePropertyNamesContractResolver;
-            serializerSettings.ContractResolver = new DefaultContractResolver();
+            // serializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            serializerSettings.ContractResolver = new DefaultContractResolver()
+            {
+                //NamingStrategy = new DefaultNamingStrategy()
+                //NamingStrategy = new CamelCaseNamingStrategy()
+                //NamingStrategy = new SnakeCaseNamingStrategy()
+                NamingStrategy = new CamelCaseNamingStrategy()
+            };
 
-            // Configure JsonSerializer to properly serialize NodaTime types.
+            // Configures JsonSerializer to properly serialize NodaTime types.
             serializerSettings.ConfigureForNodaTime(DateTimeZoneProviders.Tzdb);
         }
 
-        // CASE1: AddMvcCore with AddJsonFormatters
-        services
-            .AddMvcCore()
-            .AddApiExplorer()
-            .AddJsonFormatters(InitJsonSettings)
-            ;
+        void ConfigureSystemTextJsonSerializerSettings(JsonSerializerOptions serializerOptions)
+        {
+            if (useNewtonsoftJsonAsNamingPolicy)
+            {
+                // USING NewtonsoftJson settings as PropertyNamingPolicy for System.Text.Json
+                JsonSerializerSettings jsonSerializerSettings = new JsonSerializerSettings();
+                ConfigureNewtonsoftJsonSerializerSettings(jsonSerializerSettings);
+                serializerOptions.PropertyNamingPolicy = new NewtonsoftJsonNamingPolicy(jsonSerializerSettings);
+            }
 
-        // CASE2: AddMvc with AddJsonOptions
-        //services
-        //    .AddMvc()
-        //    .AddJsonOptions(options => InitJsonSettings(options.SerializerSettings))
-        //    ;
+            // Configures JsonSerializer to properly serialize NodaTime types.
+            serializerOptions.ConfigureForNodaTime(DateTimeZoneProviders.Tzdb);
+
+            serializerOptions.Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
+        }
+
+        if (useJsonProvider == JsonProvider.NewtonsoftJson)
+        {
+            services
+                .AddMvcCore()
+                .AddApiExplorer()
+                .AddNewtonsoftJson(options => ConfigureNewtonsoftJsonSerializerSettings(options.SerializerSettings));
+        }
+
+        if (useJsonProvider == JsonProvider.SystemTextJson)
+        {
+            services
+                .AddMvcCore()
+                .AddApiExplorer()
+                .AddJsonOptions(options => ConfigureSystemTextJsonSerializerSettings(options.JsonSerializerOptions))
+                ;
+        }
+
+        //services.AddTransient<IConfigureOptions<JsonOptions>, ConfigureNewtonsoftJsonJsonNamingPolicy>();
 
         // Adds swagger
         services.AddSwaggerGen(c =>
         {
             c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
 
-            // Configures swagger to use NodaTime.
-            // c.ConfigureForNodaTime();
+            if (useJsonProvider == JsonProvider.NewtonsoftJson)
+            {
+                // Configures swagger to use NodaTime with serializerSettings.
+                c.ConfigureForNodaTime(configureSerializerSettings: ConfigureNewtonsoftJsonSerializerSettings);
+            }
 
-            // Configures swagger to use NodaTime. Use the same InitJsonSettings action that in AddJsonFormatters
-            c.ConfigureForNodaTime(InitJsonSettings);
-
-            // Configures swagger to use NodaTime with serializerSettings.
-            // c.ConfigureForNodaTime(serializerSettings);
+            if (useJsonProvider == JsonProvider.SystemTextJson)
+            {
+                JsonSerializerOptions jsonSerializerOptions = new JsonSerializerOptions();
+                ConfigureSystemTextJsonSerializerSettings(jsonSerializerOptions);
+                c.ConfigureForNodaTimeWithSystemTextJson(jsonSerializerOptions);
+            }
         });
     }
 
-    public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+    // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+    public void Configure(IApplicationBuilder app)
     {
-        app.UseMvc().UseSwagger();
+        app.UseSwagger();
+        app.UseRouting();
+        app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
 
         // Adds swagger UI
         app.UseSwaggerUI(c =>
@@ -87,6 +140,25 @@ public class Startup
         });
     }
 }
+
+public class NewtonsoftJsonNamingPolicy : JsonNamingPolicy
+{
+    private readonly JsonSerializerSettings _jsonSerializerSettings;
+
+    /// <inheritdoc />
+    public NewtonsoftJsonNamingPolicy(JsonSerializerSettings jsonSerializerSettings)
+    {
+        _jsonSerializerSettings = jsonSerializerSettings;
+    }
+
+    /// <inheritdoc />
+    public override string ConvertName(string name)
+    {
+        var contractResolver = _jsonSerializerSettings.ContractResolver;
+        return (contractResolver as DefaultContractResolver)?.GetResolvedPropertyName(name) ?? name;
+    }
+}
+
 ```
 
 ## How it works

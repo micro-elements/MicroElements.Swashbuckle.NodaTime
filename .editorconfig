@@ -133,6 +133,10 @@ csharp_space_between_parentheses = false
 csharp_space_between_square_brackets = false
 
 # C++ Files
+
+# IDE0055: Fix formatting
+dotnet_diagnostic.IDE0055.severity = none
+
 [*.{cpp,h,in}]
 curly_bracket_next_line = true
 indent_brace_style = Allman

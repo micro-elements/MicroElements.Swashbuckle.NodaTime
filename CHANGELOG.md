@@ -1,3 +1,14 @@
+# 3.0.0-rc.2
+- Supports net core 3 and brand new System.Text.Json
+- NodaTime and NodaTime.Serialization.JsonNet updated to latest versions
+- Swashbuckle.AspNetCore updated to version 5.0.0-rc5
+- ConfigureForNodaTime became more customizable
+- Compatibility with System.Text.Json:
+  - New dependency: NodaTime.Serialization.SystemTextJson
+  - Added new ConfigureForNodaTimeWithSystemTextJson
+- Sample moved to net core 3
+- Sample supports NewtonsoftJson, System.Text.Json and System.Text.Json with NamingPolicy from NewtonsoftJson
+
 # 3.0.0-rc.1
 - Swashbuckle.AspNetCore updated to version 5.0.0-rc4
 

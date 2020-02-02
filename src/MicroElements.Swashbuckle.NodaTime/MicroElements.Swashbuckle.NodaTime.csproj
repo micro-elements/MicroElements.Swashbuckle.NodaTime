@@ -6,9 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="NodaTime" Version="2.4.0" />
-    <PackageReference Include="NodaTime.Serialization.JsonNet" Version="2.1.0" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.0.0-rc4" />
+    <PackageReference Include="NodaTime" Version="2.4.7" />
+    <PackageReference Include="NodaTime.Serialization.JsonNet" Version="2.2.0" />
+    <PackageReference Include="NodaTime.Serialization.SystemTextJson" Version="1.0.0-beta01" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.0.0-rc5" />
   </ItemGroup>
 
 </Project>

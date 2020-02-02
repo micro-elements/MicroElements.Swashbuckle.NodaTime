@@ -12,19 +12,19 @@ using NodaTime;
 namespace MicroElements.Swashbuckle.NodaTime
 {
     /// <summary>
-    /// Factory for <see cref="Schema"/>.
+    /// Factory for <see cref="Schemas"/>.
     /// </summary>
     public class SchemasFactory
     {
-        private readonly JsonSerializerSettings _serializerSettings;
+        private readonly NodaTimeSchemaSettings _settings;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SchemasFactory"/> class.
         /// </summary>
-        /// <param name="serializerSettings"><see cref="JsonSerializerSettings"/> for serializing examples and for <see cref="IContractResolver"/>.</param>
-        public SchemasFactory(JsonSerializerSettings serializerSettings)
+        /// <param name="settings"><see cref="JsonSerializerSettings"/> for serializing examples and for <see cref="IContractResolver"/>.</param>
+        public SchemasFactory(NodaTimeSchemaSettings settings)
         {
-            _serializerSettings = serializerSettings;
+            _settings = settings;
         }
 
         /// <summary>
@@ -33,7 +33,8 @@ namespace MicroElements.Swashbuckle.NodaTime
         /// <returns>Initialized <see cref="Schema"/> instance.</returns>
         public Schemas CreateSchemas()
         {
-            var dateTimeZone = DateTimeZoneProviders.Tzdb.GetSystemDefault();
+            IDateTimeZoneProvider dateTimeZoneProvider = _settings.DateTimeZoneProvider ?? DateTimeZoneProviders.Tzdb;
+            var dateTimeZone = dateTimeZoneProvider.GetSystemDefault();
             var instant = Instant.FromDateTimeUtc(DateTime.UtcNow);
             var zonedDateTime = instant.InZone(dateTimeZone);
             var interval = new Interval(instant,
@@ -59,8 +60,8 @@ namespace MicroElements.Swashbuckle.NodaTime
                     Type = "object",
                     Properties = new Dictionary<string, OpenApiSchema>
                     {
-                        { ResolvePropertyName(_serializerSettings, nameof(Interval.Start)), StringSchema(interval.Start, "date-time") },
-                        { ResolvePropertyName(_serializerSettings, nameof(Interval.End)), StringSchema(interval.End, "date-time") },
+                        { ResolvePropertyName(nameof(Interval.Start)), StringSchema(interval.Start, "date-time") },
+                        { ResolvePropertyName(nameof(Interval.End)), StringSchema(interval.End, "date-time") },
                     },
                 },
                 DateInterval = () => new OpenApiSchema
@@ -68,8 +69,8 @@ namespace MicroElements.Swashbuckle.NodaTime
                     Type = "object",
                     Properties = new Dictionary<string, OpenApiSchema>
                     {
-                        { ResolvePropertyName(_serializerSettings, nameof(DateInterval.Start)), StringSchema(dateInterval.Start, "full-date") },
-                        { ResolvePropertyName(_serializerSettings, nameof(DateInterval.End)), StringSchema(dateInterval.End, "full-date") },
+                        { ResolvePropertyName(nameof(DateInterval.Start)), StringSchema(dateInterval.Start, "full-date") },
+                        { ResolvePropertyName(nameof(DateInterval.End)), StringSchema(dateInterval.End, "full-date") },
                     },
                 },
                 Offset = () => StringSchema(zonedDateTime.Offset, "time-numoffset"),
@@ -82,20 +83,18 @@ namespace MicroElements.Swashbuckle.NodaTime
         private OpenApiSchema StringSchema(object exampleObject, string format = null) => new OpenApiSchema
         {
             Type = "string",
-            Example = new OpenApiString(JsonConvert.DeserializeObject<string>(JsonConvert.SerializeObject(exampleObject, _serializerSettings))),
+            Example = new OpenApiString(FormatToJson(exampleObject)),
             Format = format,
         };
 
-        /// <summary>
-        /// Resolves property name according <see cref="DefaultContractResolver.NamingStrategy"/>.
-        /// <para>If serializer is not DefaultContractResolver then original propertyName returns.</para>
-        /// </summary>
-        /// <param name="serializer">The serializer to use name resolve.</param>
-        /// <param name="propertyName">Property name.</param>
-        /// <returns>Resolved propertyName.</returns>
-        internal static string ResolvePropertyName(JsonSerializerSettings serializer, string propertyName)
+        private string ResolvePropertyName(string propertyName)
         {
-            return (serializer.ContractResolver as DefaultContractResolver)?.GetResolvedPropertyName(propertyName) ?? propertyName;
+            return _settings.ResolvePropertyName(propertyName);
+        }
+
+        private string FormatToJson(object value)
+        {
+            return _settings.FormatToJson(value);
         }
     }
 }
