@@ -1,3 +1,7 @@
+# 3.0.0-rc.3
+- Supports Swashbuckle 5, net core 3 and System.Text.Json
+- Swashbuckle.AspNetCore updated to version 5.0.0
+
 # 3.0.0-rc.2
 - Supports net core 3 and brand new System.Text.Json
 - NodaTime and NodaTime.Serialization.JsonNet updated to latest versions

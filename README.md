@@ -28,10 +28,10 @@ dotnet add package microelements.swashbuckle.nodatime
 - Configure `AddSwaggerGen` with `ConfigureForNodaTime`
 
 ## Benefits of MicroElements.Swashbuckle.NodaTime
+- Supports Swashbuckle 5, net core 3 and brand new System.Text.Json
 - Implemented in c#, no FSharp.Core lib in dependencies
 - JsonSerializerSettings ContractResolver uses for NamingStrategy, so you can use DefaultNamingStrategy, CamelCaseNamingStrategy or SnakeCaseNamingStrategy
-- Added new DateInterval (use NodaTime.Serialization.JsonNet >= 2.1.0)
-- Supports net core 3 and brand new System.Text.Json
+- Supports new DateInterval (use NodaTime.Serialization.JsonNet >= 2.1.0)
 
 ## Sample
 
