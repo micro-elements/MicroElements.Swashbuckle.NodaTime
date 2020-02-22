@@ -28,7 +28,9 @@ namespace WebApiSample.Controllers
                 LocalTime = zonedDateTime.TimeOfDay,
                 LocalDateTime = zonedDateTime.LocalDateTime,
                 Offset = zonedDateTime.Offset,
-                Duration = Duration.FromHours(1)
+                Duration = Duration.FromHours(1),
+                OffsetDate = new OffsetDate(zonedDateTime.Date, zonedDateTime.Offset),
+                OffsetTime = new OffsetTime(zonedDateTime.TimeOfDay, zonedDateTime.Offset),
             };
             return nodaTimeModel;
         }
