@@ -33,6 +33,10 @@ namespace MicroElements.Swashbuckle.NodaTime
 
         public Func<OpenApiSchema> Duration { get; set; }
 
+        public Func<OpenApiSchema> OffsetDate { get; set; }
+
+        public Func<OpenApiSchema> OffsetTime { get; set; }
+
         public Func<OpenApiSchema> DateTimeZone { get; set; }
     }
 }

@@ -45,6 +45,8 @@ namespace MicroElements.Swashbuckle.NodaTime
                     .PlusTicks(TimeSpan.TicksPerMillisecond));
             var dateInterval = new DateInterval(zonedDateTime.Date, zonedDateTime.Date.PlusDays(1));
             Period period = Period.Between(zonedDateTime.LocalDateTime, interval.End.InZone(dateTimeZone).LocalDateTime, PeriodUnits.AllUnits);
+            var offsetDate = new OffsetDate(zonedDateTime.Date, zonedDateTime.Offset);
+            var offsetTime = new OffsetTime(zonedDateTime.TimeOfDay, zonedDateTime.Offset);
 
             // https://xml2rfc.tools.ietf.org/public/rfc/html/rfc3339.html#anchor14
             return new Schemas
@@ -76,6 +78,8 @@ namespace MicroElements.Swashbuckle.NodaTime
                 Offset = () => StringSchema(zonedDateTime.Offset, "time-numoffset"),
                 Period = () => StringSchema(period),
                 Duration = () => StringSchema(interval.Duration),
+                OffsetDate = () => StringSchema(offsetDate),
+                OffsetTime = () => StringSchema(offsetTime),
                 DateTimeZone = () => StringSchema(dateTimeZone),
             };
         }

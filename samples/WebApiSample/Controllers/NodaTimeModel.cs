@@ -19,5 +19,7 @@ namespace WebApiSample.Controllers
         public LocalDateTime LocalDateTime { get; set; }
         public Offset Offset { get; set; }
         public Duration Duration { get; set; }
+        public OffsetDate OffsetDate { get; set; }
+        public OffsetTime OffsetTime { get; set; }
     }
 }

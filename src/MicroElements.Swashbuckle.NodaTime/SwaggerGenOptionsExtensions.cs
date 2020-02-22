@@ -91,6 +91,8 @@ namespace MicroElements.Swashbuckle.NodaTime
             config.MapType<Offset>         (schemas.Offset);
             config.MapType<Period>         (schemas.Period);
             config.MapType<Duration>       (schemas.Duration);
+            config.MapType<OffsetDate>     (schemas.OffsetDate);
+            config.MapType<OffsetTime>     (schemas.OffsetTime);
             config.MapType<DateTimeZone>   (schemas.DateTimeZone);
 
             config.MapType<Instant?>       (schemas.Instant);
@@ -102,6 +104,8 @@ namespace MicroElements.Swashbuckle.NodaTime
             config.MapType<Interval?>      (schemas.Interval);
             config.MapType<Offset?>        (schemas.Offset);
             config.MapType<Duration?>      (schemas.Duration);
+            config.MapType<OffsetDate?>    (schemas.OffsetDate);
+            config.MapType<OffsetTime?>    (schemas.OffsetTime);
         }
     }
 
