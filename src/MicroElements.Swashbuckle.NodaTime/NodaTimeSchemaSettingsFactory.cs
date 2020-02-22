@@ -14,7 +14,7 @@ namespace MicroElements.Swashbuckle.NodaTime
         /// Creates <see cref="NodaTimeSchemaSettings"/> for NewtonsoftJson.
         /// </summary>
         /// <param name="serializerSettings"><see cref="JsonSerializerSettings"/>.</param>
-        /// <param name="shouldGenerateExamples">Should the example node be generated</param>
+        /// <param name="shouldGenerateExamples">Should the example node be generated.</param>
         /// <param name="dateTimeZoneProvider">Optional <see cref="IDateTimeZoneProvider"/>.</param>
         /// <returns><see cref="NodaTimeSchemaSettings"/>.</returns>
         public static NodaTimeSchemaSettings CreateNodaTimeSchemaSettingsForNewtonsoftJson(
@@ -42,7 +42,7 @@ namespace MicroElements.Swashbuckle.NodaTime
         /// Creates <see cref="NodaTimeSchemaSettings"/> for SystemTextJson.
         /// </summary>
         /// <param name="jsonSerializerOptions"><see cref="JsonSerializerOptions"/>.</param>
-        /// <param name="shouldGenerateExamples">Should the example node be generated</param>
+        /// <param name="shouldGenerateExamples">Should the example node be generated.</param>
         /// <param name="dateTimeZoneProvider">Optional <see cref="IDateTimeZoneProvider"/>.</param>
         /// <returns><see cref="NodaTimeSchemaSettings"/>.</returns>
         public static NodaTimeSchemaSettings CreateNodaTimeSchemaSettingsForSystemTextJson(

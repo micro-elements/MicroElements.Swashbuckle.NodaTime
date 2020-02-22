@@ -90,14 +90,14 @@ namespace WebApiSample
                 if (useJsonProvider == JsonProvider.NewtonsoftJson)
                 {
                     // Configures swagger to use NodaTime with serializerSettings.
-                    c.ConfigureForNodaTime(configureSerializerSettings: ConfigureNewtonsoftJsonSerializerSettings);
+                    c.ConfigureForNodaTime(configureSerializerSettings: ConfigureNewtonsoftJsonSerializerSettings, shouldGenerateExamples: true);
                 }
 
                 if (useJsonProvider == JsonProvider.SystemTextJson)
                 {
                     JsonSerializerOptions jsonSerializerOptions = new JsonSerializerOptions();
                     ConfigureSystemTextJsonSerializerSettings(jsonSerializerOptions);
-                    c.ConfigureForNodaTimeWithSystemTextJson(jsonSerializerOptions);
+                    c.ConfigureForNodaTimeWithSystemTextJson(jsonSerializerOptions, shouldGenerateExamples: true);
                 }
             });
         }

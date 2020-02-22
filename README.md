@@ -92,7 +92,7 @@ public class Startup
             services
                 .AddMvcCore()
                 .AddApiExplorer()
-                .AddNewtonsoftJson(options => ConfigureNewtonsoftJsonSerializerSettings(options.SerializerSettings));
+                .AddNewtonsoftJson(options => ConfigureNewtonsoftJsonSerializerSettings(options.SerializerSettings, shouldGenerateExamples: true));
         }
 
         if (useJsonProvider == JsonProvider.SystemTextJson)
@@ -100,7 +100,7 @@ public class Startup
             services
                 .AddMvcCore()
                 .AddApiExplorer()
-                .AddJsonOptions(options => ConfigureSystemTextJsonSerializerSettings(options.JsonSerializerOptions))
+                .AddJsonOptions(options => ConfigureSystemTextJsonSerializerSettings(options.JsonSerializerOptions, shouldGenerateExamples: true))
                 ;
         }
 
