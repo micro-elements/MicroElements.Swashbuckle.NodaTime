@@ -83,7 +83,9 @@ namespace MicroElements.Swashbuckle.NodaTime
         private OpenApiSchema StringSchema(object exampleObject, string format = null) => new OpenApiSchema
         {
             Type = "string",
-            Example = new OpenApiString(FormatToJson(exampleObject)),
+            Example = _settings.ShouldGenerateExamples
+                ? new OpenApiString(FormatToJson(exampleObject))
+                : null,
             Format = format,
         };
 

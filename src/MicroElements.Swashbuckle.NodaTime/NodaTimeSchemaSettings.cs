@@ -23,6 +23,8 @@ namespace MicroElements.Swashbuckle.NodaTime
         /// </summary>
         public IDateTimeZoneProvider DateTimeZoneProvider { get; }
 
+        public bool ShouldGenerateExamples { get; }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="NodaTimeSchemaSettings"/> class.
         /// </summary>
@@ -32,10 +34,12 @@ namespace MicroElements.Swashbuckle.NodaTime
         public NodaTimeSchemaSettings(
             Func<string, string> resolvePropertyName,
             Func<object, string> formatToJson,
+            bool shouldGenerateExamples,
             IDateTimeZoneProvider dateTimeZoneProvider = null)
         {
             ResolvePropertyName = resolvePropertyName;
             FormatToJson = formatToJson;
+            ShouldGenerateExamples = shouldGenerateExamples;
             DateTimeZoneProvider = dateTimeZoneProvider;
         }
     }

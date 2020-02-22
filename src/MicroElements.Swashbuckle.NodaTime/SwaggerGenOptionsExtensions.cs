@@ -21,11 +21,13 @@ namespace MicroElements.Swashbuckle.NodaTime
         /// </summary>
         /// <param name="config">SwaggerGenOptions.</param>
         /// <param name="serializerSettings">Optional serializer settings.</param>
+        /// <param name="shouldGenerateExamples">Optional if we should generate examples</param>
         /// <param name="configureSerializerSettings">Optional action to configure serializerSettings.</param>
         /// <param name="dateTimeZoneProvider">Optional DateTimeZoneProviders.</param>
         public static void ConfigureForNodaTime(
             this SwaggerGenOptions config,
             JsonSerializerSettings serializerSettings = null,
+            bool shouldGenerateExamples = true,
             Action<JsonSerializerSettings> configureSerializerSettings = null,
             IDateTimeZoneProvider dateTimeZoneProvider = null)
         {
@@ -38,7 +40,7 @@ namespace MicroElements.Swashbuckle.NodaTime
                 serializerSettings.ConfigureForNodaTime(dateTimeZoneProvider ?? DateTimeZoneProviders.Tzdb);
             }
 
-            var nodaTimeSchemaSettings = serializerSettings.CreateNodaTimeSchemaSettingsForNewtonsoftJson();
+            var nodaTimeSchemaSettings = serializerSettings.CreateNodaTimeSchemaSettingsForNewtonsoftJson(shouldGenerateExamples);
             config.ConfigureForNodaTime(nodaTimeSchemaSettings);
         }
 
@@ -48,11 +50,13 @@ namespace MicroElements.Swashbuckle.NodaTime
         /// </summary>
         /// <param name="config">SwaggerGenOptions.</param>
         /// <param name="jsonSerializerOptions">Optional serializer options.</param>
+        /// /// <param name="shouldGenerateExamples">Optional if we should generate examples</param>
         /// <param name="configureSerializerOptions">Optional action to configure jsonSerializerOptions.</param>
         /// <param name="dateTimeZoneProvider">Optional DateTimeZoneProviders.</param>
         public static void ConfigureForNodaTimeWithSystemTextJson(
             this SwaggerGenOptions config,
             JsonSerializerOptions jsonSerializerOptions = null,
+            bool shouldGenerateExamples = true,
             Action<JsonSerializerOptions> configureSerializerOptions = null,
             IDateTimeZoneProvider dateTimeZoneProvider = null)
         {
@@ -62,7 +66,7 @@ namespace MicroElements.Swashbuckle.NodaTime
             global::NodaTime.Serialization.SystemTextJson.Extensions.ConfigureForNodaTime(jsonSerializerOptions,
                 dateTimeZoneProvider ?? DateTimeZoneProviders.Tzdb);
 
-            var nodaTimeSchemaSettings = jsonSerializerOptions.CreateNodaTimeSchemaSettingsForSystemTextJson();
+            var nodaTimeSchemaSettings = jsonSerializerOptions.CreateNodaTimeSchemaSettingsForSystemTextJson(shouldGenerateExamples);
             config.ConfigureForNodaTime(nodaTimeSchemaSettings);
         }
 
