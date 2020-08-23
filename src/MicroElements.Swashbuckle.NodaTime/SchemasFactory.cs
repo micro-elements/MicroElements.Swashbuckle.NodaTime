@@ -52,8 +52,8 @@ namespace MicroElements.Swashbuckle.NodaTime
             return new Schemas
             {
                 Instant = () => StringSchema(instant, "date-time"),
-                LocalDate = () => StringSchema(zonedDateTime.Date, "full-date"),
-                LocalTime = () => StringSchema(zonedDateTime.TimeOfDay, "partial-time"),
+                LocalDate = () => StringSchema(zonedDateTime.Date, "date"),
+                LocalTime = () => StringSchema(zonedDateTime.TimeOfDay),
                 LocalDateTime = () => StringSchema(zonedDateTime.LocalDateTime),
                 OffsetDateTime = () => StringSchema(instant.WithOffset(zonedDateTime.Offset), "date-time"),
                 ZonedDateTime = () => StringSchema(zonedDateTime),
@@ -71,11 +71,11 @@ namespace MicroElements.Swashbuckle.NodaTime
                     Type = "object",
                     Properties = new Dictionary<string, OpenApiSchema>
                     {
-                        { ResolvePropertyName(nameof(DateInterval.Start)), StringSchema(dateInterval.Start, "full-date") },
-                        { ResolvePropertyName(nameof(DateInterval.End)), StringSchema(dateInterval.End, "full-date") },
+                        { ResolvePropertyName(nameof(DateInterval.Start)), StringSchema(dateInterval.Start, "date") },
+                        { ResolvePropertyName(nameof(DateInterval.End)), StringSchema(dateInterval.End, "date") },
                     },
                 },
-                Offset = () => StringSchema(zonedDateTime.Offset, "time-numoffset"),
+                Offset = () => StringSchema(zonedDateTime.Offset),
                 Period = () => StringSchema(period),
                 Duration = () => StringSchema(interval.Duration),
                 OffsetDate = () => StringSchema(offsetDate),
