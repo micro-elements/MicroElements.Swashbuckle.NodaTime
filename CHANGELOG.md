@@ -1,3 +1,15 @@
+# 3.0.0
+- Supports Swashbuckle 5, net core 3 and System.Text.Json
+- Swashbuckle.AspNetCore updated to version 5.0.0
+- NodaTime and NodaTime.Serialization.JsonNet updated to latest versions
+- ConfigureForNodaTime became more customizable
+- Compatibility with System.Text.Json:
+  - New dependency: NodaTime.Serialization.SystemTextJson
+  - Added new ConfigureForNodaTimeWithSystemTextJson
+- PR #13 by jeremyhayes: remove unspecified format aliases (full-date, partial-time)
+- PR #8 by Romanx: Add flag for generating examples in output
+- PR #11 by dgarciarubio: Add support for OffsetDate and OffsetTime types
+
 # 3.0.0-rc.4
 - PR #8 by Romanx: Add flag for generating examples in output
 - PR #11 by dgarciarubio: Add support for OffsetDate and OffsetTime types
