@@ -7,7 +7,7 @@ using NodaTime;
 namespace MicroElements.Swashbuckle.NodaTime
 {
     /// <summary>
-    /// Settings that control serialization aspects.
+    /// Settings that controls serialization aspects.
     /// </summary>
     public class NodaTimeSchemaSettings
     {
@@ -27,9 +27,14 @@ namespace MicroElements.Swashbuckle.NodaTime
         public IDateTimeZoneProvider DateTimeZoneProvider { get; }
 
         /// <summary>
-        /// Should the example node be generated.
+        /// Gets a value indicating whether example node should be generated.
         /// </summary>
         public bool ShouldGenerateExamples { get; }
+
+        /// <summary>
+        /// Gets <see cref="SchemaExamples"/> for generation schema example values.
+        /// </summary>
+        public SchemaExamples SchemaExamples { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="NodaTimeSchemaSettings"/> class.
@@ -37,17 +42,25 @@ namespace MicroElements.Swashbuckle.NodaTime
         /// <param name="resolvePropertyName">Function that resolves property name by proper naming strategy.</param>
         /// <param name="formatToJson">Function that formats object as json text.</param>
         /// <param name="shouldGenerateExamples">Should the example node be generated.</param>
+        /// <param name="schemaExamples"><see cref="SchemaExamples"/> for schema example values.</param>
         /// <param name="dateTimeZoneProvider"><see cref="IDateTimeZoneProvider"/> configured in Startup.</param>
         public NodaTimeSchemaSettings(
             Func<string, string> resolvePropertyName,
             Func<object, string> formatToJson,
             bool shouldGenerateExamples,
-            IDateTimeZoneProvider dateTimeZoneProvider = null)
+            SchemaExamples? schemaExamples = null,
+            IDateTimeZoneProvider? dateTimeZoneProvider = null)
         {
             ResolvePropertyName = resolvePropertyName;
             FormatToJson = formatToJson;
+
+            DateTimeZoneProvider = dateTimeZoneProvider ?? DateTimeZoneProviders.Tzdb;
+
             ShouldGenerateExamples = shouldGenerateExamples;
-            DateTimeZoneProvider = dateTimeZoneProvider;
+            SchemaExamples = schemaExamples ?? new SchemaExamples(
+                DateTimeZoneProvider,
+                dateTimeUtc: null,
+                dateTimeZone: null);
         }
     }
 }

@@ -8,6 +8,9 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicroElements.Swashbuckle.NodaTime", "src\MicroElements.Swashbuckle.NodaTime\MicroElements.Swashbuckle.NodaTime.csproj", "{AAC5EC68-5313-48AC-B25B-3B3B4611AE4F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{09A81706-5AAC-4D3B-81FB-BD4DD28D03CB}"
+	ProjectSection(SolutionItems) = preProject
+		test\Directory.Build.props = test\Directory.Build.props
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicroElements.Swashbuckle.NodaTime.Tests", "test\MicroElements.Swashbuckle.NodaTime.Tests\MicroElements.Swashbuckle.NodaTime.Tests.csproj", "{798200FF-E54C-428F-A814-6CF9779DCE39}"
 EndProject
@@ -21,6 +24,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		common.props = common.props
 		src\Directory.Build.props = src\Directory.Build.props
 		README.md = README.md
+		src\stylecop.json = src\stylecop.json
+		src\stylecop.props = src\stylecop.props
+		src\stylecop.ruleset = src\stylecop.ruleset
 		version.props = version.props
 	EndProjectSection
 EndProject

@@ -7,36 +7,78 @@ using Microsoft.OpenApi.Models;
 namespace MicroElements.Swashbuckle.NodaTime
 {
     /// <summary>
-    /// Swagger schemas.
+    /// Swagger schema generators.
     /// </summary>
     public class Schemas
     {
-        public Func<OpenApiSchema> Instant { get; set; }
+        /// <summary>
+        /// Gets or sets schema generator for <see cref="Instant"/>.
+        /// </summary>
+        public Func<OpenApiSchema> Instant { get; set; } = null!;
 
-        public Func<OpenApiSchema> LocalDate { get; set; }
+        /// <summary>
+        /// Gets or sets schema generator for <see cref="LocalDate"/>.
+        /// </summary>
+        public Func<OpenApiSchema> LocalDate { get; set; } = null!;
 
-        public Func<OpenApiSchema> LocalTime { get; set; }
+        /// <summary>
+        /// Gets or sets schema generator for <see cref="LocalTime"/>.
+        /// </summary>
+        public Func<OpenApiSchema> LocalTime { get; set; } = null!;
 
-        public Func<OpenApiSchema> LocalDateTime { get; set; }
+        /// <summary>
+        /// Gets or sets schema generator for <see cref="LocalDateTime"/>.
+        /// </summary>
+        public Func<OpenApiSchema> LocalDateTime { get; set; } = null!;
 
-        public Func<OpenApiSchema> OffsetDateTime { get; set; }
+        /// <summary>
+        /// Gets or sets schema generator for <see cref="OffsetDateTime"/>.
+        /// </summary>
+        public Func<OpenApiSchema> OffsetDateTime { get; set; } = null!;
 
-        public Func<OpenApiSchema> ZonedDateTime { get; set; }
+        /// <summary>
+        /// Gets or sets schema generator for <see cref="ZonedDateTime"/>.
+        /// </summary>
+        public Func<OpenApiSchema> ZonedDateTime { get; set; } = null!;
 
-        public Func<OpenApiSchema> Interval { get; set; }
+        /// <summary>
+        /// Gets or sets schema generator for <see cref="Interval"/>.
+        /// </summary>
+        public Func<OpenApiSchema> Interval { get; set; } = null!;
 
-        public Func<OpenApiSchema> DateInterval { get; set; }
+        /// <summary>
+        /// Gets or sets schema generator for <see cref="DateInterval"/>.
+        /// </summary>
+        public Func<OpenApiSchema> DateInterval { get; set; } = null!;
 
-        public Func<OpenApiSchema> Offset { get; set; }
+        /// <summary>
+        /// Gets or sets schema generator for <see cref="Offset"/>.
+        /// </summary>
+        public Func<OpenApiSchema> Offset { get; set; } = null!;
 
-        public Func<OpenApiSchema> Period { get; set; }
+        /// <summary>
+        /// Gets or sets schema generator for <see cref="Period"/>.
+        /// </summary>
+        public Func<OpenApiSchema> Period { get; set; } = null!;
 
-        public Func<OpenApiSchema> Duration { get; set; }
+        /// <summary>
+        /// Gets or sets schema generator for <see cref="Duration"/>.
+        /// </summary>
+        public Func<OpenApiSchema> Duration { get; set; } = null!;
 
-        public Func<OpenApiSchema> OffsetDate { get; set; }
+        /// <summary>
+        /// Gets or sets schema generator for <see cref="OffsetDate"/>.
+        /// </summary>
+        public Func<OpenApiSchema> OffsetDate { get; set; } = null!;
 
-        public Func<OpenApiSchema> OffsetTime { get; set; }
+        /// <summary>
+        /// Gets or sets schema generator for <see cref="OffsetTime"/>.
+        /// </summary>
+        public Func<OpenApiSchema> OffsetTime { get; set; } = null!;
 
-        public Func<OpenApiSchema> DateTimeZone { get; set; }
+        /// <summary>
+        /// Gets or sets schema generator for <see cref="DateTimeZone"/>.
+        /// </summary>
+        public Func<OpenApiSchema> DateTimeZone { get; set; } = null!;
     }
 }

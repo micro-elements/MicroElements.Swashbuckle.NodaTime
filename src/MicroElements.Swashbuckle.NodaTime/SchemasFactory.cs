@@ -1,7 +1,6 @@
 ﻿// Copyright (c) MicroElements. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-using System;
 using System.Collections.Generic;
 using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
@@ -30,40 +29,27 @@ namespace MicroElements.Swashbuckle.NodaTime
         /// <summary>
         /// Creates schemas container.
         /// </summary>
-        /// <returns>Initialized <see cref="Schema"/> instance.</returns>
+        /// <returns>Initialized <see cref="Schemas"/> instance.</returns>
         public Schemas CreateSchemas()
         {
-            IDateTimeZoneProvider dateTimeZoneProvider = _settings.DateTimeZoneProvider ?? DateTimeZoneProviders.Tzdb;
-            var dateTimeZone = dateTimeZoneProvider.GetSystemDefault();
-            var instant = Instant.FromDateTimeUtc(DateTime.UtcNow);
-            var zonedDateTime = instant.InZone(dateTimeZone);
-            var interval = new Interval(instant,
-                instant.PlusTicks(TimeSpan.TicksPerDay)
-                    .PlusTicks(TimeSpan.TicksPerHour)
-                    .PlusTicks(TimeSpan.TicksPerMinute)
-                    .PlusTicks(TimeSpan.TicksPerSecond)
-                    .PlusTicks(TimeSpan.TicksPerMillisecond));
-            var dateInterval = new DateInterval(zonedDateTime.Date, zonedDateTime.Date.PlusDays(1));
-            Period period = Period.Between(zonedDateTime.LocalDateTime, interval.End.InZone(dateTimeZone).LocalDateTime, PeriodUnits.AllUnits);
-            var offsetDate = new OffsetDate(zonedDateTime.Date, zonedDateTime.Offset);
-            var offsetTime = new OffsetTime(zonedDateTime.TimeOfDay, zonedDateTime.Offset);
+            SchemaExamples examples = _settings.SchemaExamples;
 
             // https://xml2rfc.tools.ietf.org/public/rfc/html/rfc3339.html#anchor14
             return new Schemas
             {
-                Instant = () => StringSchema(instant, "date-time"),
-                LocalDate = () => StringSchema(zonedDateTime.Date, "date"),
-                LocalTime = () => StringSchema(zonedDateTime.TimeOfDay),
-                LocalDateTime = () => StringSchema(zonedDateTime.LocalDateTime),
-                OffsetDateTime = () => StringSchema(instant.WithOffset(zonedDateTime.Offset), "date-time"),
-                ZonedDateTime = () => StringSchema(zonedDateTime),
+                Instant = () => StringSchema(examples.Instant, "date-time"),
+                LocalDate = () => StringSchema(examples.ZonedDateTime.Date, "date"),
+                LocalTime = () => StringSchema(examples.ZonedDateTime.TimeOfDay),
+                LocalDateTime = () => StringSchema(examples.ZonedDateTime.LocalDateTime),
+                OffsetDateTime = () => StringSchema(examples.OffsetDateTime, "date-time"),
+                ZonedDateTime = () => StringSchema(examples.ZonedDateTime),
                 Interval = () => new OpenApiSchema
                 {
                     Type = "object",
                     Properties = new Dictionary<string, OpenApiSchema>
                     {
-                        { ResolvePropertyName(nameof(Interval.Start)), StringSchema(interval.Start, "date-time") },
-                        { ResolvePropertyName(nameof(Interval.End)), StringSchema(interval.End, "date-time") },
+                        { ResolvePropertyName(nameof(Interval.Start)), StringSchema(examples.Interval.Start, "date-time") },
+                        { ResolvePropertyName(nameof(Interval.End)), StringSchema(examples.Interval.End, "date-time") },
                     },
                 },
                 DateInterval = () => new OpenApiSchema
@@ -71,27 +57,30 @@ namespace MicroElements.Swashbuckle.NodaTime
                     Type = "object",
                     Properties = new Dictionary<string, OpenApiSchema>
                     {
-                        { ResolvePropertyName(nameof(DateInterval.Start)), StringSchema(dateInterval.Start, "date") },
-                        { ResolvePropertyName(nameof(DateInterval.End)), StringSchema(dateInterval.End, "date") },
+                        { ResolvePropertyName(nameof(DateInterval.Start)), StringSchema(examples.DateInterval.Start, "date") },
+                        { ResolvePropertyName(nameof(DateInterval.End)), StringSchema(examples.DateInterval.End, "date") },
                     },
                 },
-                Offset = () => StringSchema(zonedDateTime.Offset),
-                Period = () => StringSchema(period),
-                Duration = () => StringSchema(interval.Duration),
-                OffsetDate = () => StringSchema(offsetDate),
-                OffsetTime = () => StringSchema(offsetTime),
-                DateTimeZone = () => StringSchema(dateTimeZone),
+                Offset = () => StringSchema(examples.ZonedDateTime.Offset),
+                Period = () => StringSchema(examples.Period),
+                Duration = () => StringSchema(examples.Interval.Duration),
+                OffsetDate = () => StringSchema(examples.OffsetDate),
+                OffsetTime = () => StringSchema(examples.OffsetTime),
+                DateTimeZone = () => StringSchema(examples.DateTimeZone),
             };
         }
 
-        private OpenApiSchema StringSchema(object exampleObject, string format = null) => new OpenApiSchema
+        private OpenApiSchema StringSchema(object exampleObject, string? format = null)
         {
-            Type = "string",
-            Example = _settings.ShouldGenerateExamples
-                ? new OpenApiString(FormatToJson(exampleObject))
-                : null,
-            Format = format,
-        };
+            return new OpenApiSchema
+            {
+                Type = "string",
+                Example = _settings.ShouldGenerateExamples
+                    ? new OpenApiString(FormatToJson(exampleObject))
+                    : null,
+                Format = format
+            };
+        }
 
         private string ResolvePropertyName(string propertyName)
         {

@@ -1,8 +1,10 @@
-﻿using System;
+﻿// Copyright (c) MicroElements. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
+using System;
 using System.Linq;
 using System.Text.Json;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
 using NodaTime;
 using NodaTime.Serialization.JsonNet;
@@ -21,17 +23,22 @@ namespace MicroElements.Swashbuckle.NodaTime
         /// </summary>
         /// <param name="config">SwaggerGenOptions.</param>
         /// <param name="serializerSettings">Optional serializer settings.</param>
-        /// <param name="shouldGenerateExamples">Optional if we should generate examples</param>
         /// <param name="configureSerializerSettings">Optional action to configure serializerSettings.</param>
         /// <param name="dateTimeZoneProvider">Optional DateTimeZoneProviders.</param>
+        /// <param name="shouldGenerateExamples">Should generate example for schema.</param>
+        /// <param name="schemaExamples"><see cref="SchemaExamples"/> for schema example values.</param>
         public static void ConfigureForNodaTime(
             this SwaggerGenOptions config,
-            JsonSerializerSettings serializerSettings = null,
+            JsonSerializerSettings? serializerSettings = null,
+            Action<JsonSerializerSettings>? configureSerializerSettings = null,
+            IDateTimeZoneProvider? dateTimeZoneProvider = null,
             bool shouldGenerateExamples = true,
-            Action<JsonSerializerSettings> configureSerializerSettings = null,
-            IDateTimeZoneProvider dateTimeZoneProvider = null)
+            SchemaExamples? schemaExamples = null)
         {
-            serializerSettings = serializerSettings ?? new JsonSerializerSettings();
+            if (config == null)
+                throw new ArgumentNullException(nameof(config));
+
+            serializerSettings ??= new JsonSerializerSettings();
             configureSerializerSettings?.Invoke(serializerSettings);
 
             bool isNodaConvertersRegistered = serializerSettings.Converters.Any(converter => converter is NodaConverterBase<Instant>);
@@ -40,7 +47,10 @@ namespace MicroElements.Swashbuckle.NodaTime
                 serializerSettings.ConfigureForNodaTime(dateTimeZoneProvider ?? DateTimeZoneProviders.Tzdb);
             }
 
-            var nodaTimeSchemaSettings = serializerSettings.CreateNodaTimeSchemaSettingsForNewtonsoftJson(shouldGenerateExamples);
+            var nodaTimeSchemaSettings = serializerSettings.CreateNodaTimeSchemaSettingsForNewtonsoftJson(
+                dateTimeZoneProvider: dateTimeZoneProvider,
+                shouldGenerateExamples: shouldGenerateExamples,
+                schemaExamples: schemaExamples);
             config.ConfigureForNodaTime(nodaTimeSchemaSettings);
         }
 
@@ -50,23 +60,31 @@ namespace MicroElements.Swashbuckle.NodaTime
         /// </summary>
         /// <param name="config">SwaggerGenOptions.</param>
         /// <param name="jsonSerializerOptions">Optional serializer options.</param>
-        /// /// <param name="shouldGenerateExamples">Optional if we should generate examples</param>
         /// <param name="configureSerializerOptions">Optional action to configure jsonSerializerOptions.</param>
         /// <param name="dateTimeZoneProvider">Optional DateTimeZoneProviders.</param>
+        /// <param name="shouldGenerateExamples">Should generate example for schema.</param>
+        /// <param name="schemaExamples"><see cref="SchemaExamples"/> for schema example values.</param>
         public static void ConfigureForNodaTimeWithSystemTextJson(
             this SwaggerGenOptions config,
-            JsonSerializerOptions jsonSerializerOptions = null,
+            JsonSerializerOptions? jsonSerializerOptions = null,
+            Action<JsonSerializerOptions>? configureSerializerOptions = null,
+            IDateTimeZoneProvider? dateTimeZoneProvider = null,
             bool shouldGenerateExamples = true,
-            Action<JsonSerializerOptions> configureSerializerOptions = null,
-            IDateTimeZoneProvider dateTimeZoneProvider = null)
+            SchemaExamples? schemaExamples = null)
         {
-            jsonSerializerOptions = jsonSerializerOptions ?? new JsonSerializerOptions();
+            if (config == null)
+                throw new ArgumentNullException(nameof(config));
+
+            jsonSerializerOptions ??= new JsonSerializerOptions();
             configureSerializerOptions?.Invoke(jsonSerializerOptions);
 
             global::NodaTime.Serialization.SystemTextJson.Extensions.ConfigureForNodaTime(jsonSerializerOptions,
                 dateTimeZoneProvider ?? DateTimeZoneProviders.Tzdb);
 
-            var nodaTimeSchemaSettings = jsonSerializerOptions.CreateNodaTimeSchemaSettingsForSystemTextJson(shouldGenerateExamples);
+            var nodaTimeSchemaSettings = jsonSerializerOptions.CreateNodaTimeSchemaSettingsForSystemTextJson(
+                dateTimeZoneProvider: dateTimeZoneProvider,
+                shouldGenerateExamples: shouldGenerateExamples,
+                schemaExamples: schemaExamples);
             config.ConfigureForNodaTime(nodaTimeSchemaSettings);
         }
 
@@ -80,6 +98,7 @@ namespace MicroElements.Swashbuckle.NodaTime
             config.ParameterFilter<NamingPolicyParameterFilter>(nodaTimeSchemaSettings);
 
             Schemas schemas = new SchemasFactory(nodaTimeSchemaSettings).CreateSchemas();
+
             config.MapType<Instant>        (schemas.Instant);
             config.MapType<LocalDate>      (schemas.LocalDate);
             config.MapType<LocalTime>      (schemas.LocalTime);
@@ -95,6 +114,7 @@ namespace MicroElements.Swashbuckle.NodaTime
             config.MapType<OffsetTime>     (schemas.OffsetTime);
             config.MapType<DateTimeZone>   (schemas.DateTimeZone);
 
+            // Nullable structs
             config.MapType<Instant?>       (schemas.Instant);
             config.MapType<LocalDate?>     (schemas.LocalDate);
             config.MapType<LocalTime?>     (schemas.LocalTime);
@@ -106,25 +126,6 @@ namespace MicroElements.Swashbuckle.NodaTime
             config.MapType<Duration?>      (schemas.Duration);
             config.MapType<OffsetDate?>    (schemas.OffsetDate);
             config.MapType<OffsetTime?>    (schemas.OffsetTime);
-        }
-    }
-
-    /// <summary>
-    /// Resolves property name by <see cref="NodaTimeSchemaSettings"/>.
-    /// </summary>
-    internal class NamingPolicyParameterFilter : IParameterFilter
-    {
-        private readonly NodaTimeSchemaSettings _nodaTimeSchemaSettings;
-
-        public NamingPolicyParameterFilter(NodaTimeSchemaSettings nodaTimeSchemaSettings)
-        {
-            _nodaTimeSchemaSettings = nodaTimeSchemaSettings;
-        }
-
-        /// <inheritdoc />
-        public void Apply(OpenApiParameter parameter, ParameterFilterContext context)
-        {
-            parameter.Name = _nodaTimeSchemaSettings.ResolvePropertyName(parameter.Name);
         }
     }
 }

@@ -1,3 +1,11 @@
+# 4.0.0
+- NodaTime updated to 3.0.0
+- NodaTime.Serialization.JsonNet updated to 3.0.0
+- NodaTime.Serialization.SystemTextJson updated to 1.0.0
+- Swashbuckle.AspNetCore" updated to version 5.5.1
+- Added SchemaExamples to NodaTimeSchemaSettings and configuration methods ConfigureForNodaTime and ConfigureForNodaTimeWithSystemTextJson to support custom example values
+- Nullable annotations added
+
 # 3.0.0
 - Supports Swashbuckle 5, net core 3 and System.Text.Json
 - Swashbuckle.AspNetCore updated to version 5.0.0
