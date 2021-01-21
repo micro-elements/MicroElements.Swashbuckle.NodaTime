@@ -2,13 +2,17 @@
   <Import Project="version.props" />
   <PropertyGroup>
     <Authors>micro-elements</Authors>
-    <Description>Configure Asp.Net Core and swagger to use NodaTime types.
+    <Description>
+Configure Asp.Net Core and swagger to use NodaTime types.
 
 # Benefits of MicroElements.Swashbuckle.NodaTime
 - Supports Swashbuckle 5, net core 3 and brand new System.Text.Json
 - Implemented in c#, no FSharp.Core lib in dependencies
-- JsonSerializerSettings ContractResolver uses for NamingStrategy, so you can use DefaultNamingStrategy, CamelCaseNamingStrategy or SnakeCaseNamingStrategy
-- Supports DateInterval</Description>
+- NamingStrategy support. You can use DefaultNamingStrategy, CamelCaseNamingStrategy or SnakeCaseNamingStrategy
+- Supports DateInterval
+- Can be generated with user provided examples or without examples
+
+    </Description>
     <PackageTags>swagger swashbuckle NodaTime aspnetcore</PackageTags>
     <PackageIconUrl>https://raw.githubusercontent.com/micro-elements/MicroElements/master/image/logo_rounded.png</PackageIconUrl>
     <PackageProjectUrl>https://github.com/micro-elements/MicroElements.Swashbuckle.NodaTime</PackageProjectUrl>
